@@ -6,5 +6,5 @@ export const AuthRouteSegments = {
 
 export const AuthFullRoutePaths = {
   base: AuthBasePath,
-  login: `${AuthBasePath}/${AuthRouteSegments.Login}`,
+  login: `auth/login`,
 };

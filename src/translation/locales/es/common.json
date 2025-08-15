@@ -1,0 +1,7 @@
+{
+  "actions": {
+    "accept": "acceptar",
+    "cancel": "cancelar",
+    "submit": "enviar"
+  }
+}

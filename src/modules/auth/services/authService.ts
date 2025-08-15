@@ -1,5 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { helloWorld, userProfile } from '../repositories/authRepository';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { helloWorld, login, userProfile } from '../repositories/authRepository';
+import { AUTH_QUERY_KEYS } from '../constants/authQueryKeys';
+import LocalStorageHelper from '@/shared/helpers/localStorage';
 
 export const useHelloWorld = () => {
   return useQuery({
@@ -11,9 +13,21 @@ export const useHelloWorld = () => {
 
 export const useUserProfile = () => {
   return useQuery({
-    queryKey: ['profile'],
+    queryKey: AUTH_QUERY_KEYS.userProfile,
     queryFn: userProfile,
     select: (res) => res.data,
     staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useLogin = () => {
+  return useMutation({
+    mutationFn: login,
+    onSuccess: (data) => {
+      LocalStorageHelper.setStorageValue<string>(
+        'accessToken',
+        data.data!.accessToken,
+      );
+    },
   });
 };

@@ -23,6 +23,8 @@ export default tseslint.config([
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
+      'prefer-promise-reject-errors': 'off',
+      '@typescript-eslint/prefer-promise-reject-errors': 'error',
     },
     languageOptions: {
       ecmaVersion: 2020,

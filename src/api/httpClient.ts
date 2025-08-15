@@ -2,6 +2,7 @@ import environment from '@/environment/env';
 import LocalStorageHelper from '@/shared/helpers/localStorage';
 import axios, { AxiosError, HttpStatusCode, type AxiosResponse } from 'axios';
 import type { IHttpResponse } from './interfaces';
+import { ApiError } from './HttpError';
 
 export const LocalStorageKeys = {
   AccessToken: 'access-token',
@@ -26,19 +27,27 @@ HttpClient.interceptors.response.use(
   <T>(response: AxiosResponse<IHttpResponse<T>>) => {
     return response;
   },
-  (error) => {
+  (error: AxiosError<IHttpResponse<unknown>>) => {
     if (error instanceof AxiosError) {
+      let standardError: IHttpResponse<unknown> = {
+        statusCode: HttpStatusCode.BadRequest,
+        message: 'Unknown error',
+        data: null,
+        error: null,
+      };
       if (error.request) {
         // ERROR EN LA PETICION
       }
       if (error.response) {
         // ERROR EN LA RESPUESTA
-        if (error.response.status === HttpStatusCode.Unauthorized.valueOf()) {
-          // REVIEW: Decidir un mejor lugar para redigigir a login
-          // redirect('auth/login');
-        }
+        standardError = {
+          statusCode: error.response.status,
+          message: error.response.data?.message || 'Error',
+          data: null,
+          error: error.response.data?.error ?? null,
+        };
       }
-      throw error as Error;
+      return Promise.reject(new ApiError(standardError));
     }
   },
 );

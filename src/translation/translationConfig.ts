@@ -29,4 +29,6 @@ void i18n
   }
 });
 
+export type translateFunc = (key: string) => string;
+
 export default i18n;

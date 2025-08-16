@@ -5,24 +5,24 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/components/ui/Card';
-import { useTranslation } from 'react-i18next';
 import { LoginForm } from '../components/forms/LoginForm';
-export const Login = () => {
-  const { t } = useTranslation();
+import { useTranslation } from 'react-i18next';
 
+export const Login = () => {
+  const { t } = useTranslation('auth');
   return (
     <section>
       <Card>
         <CardHeader>
           <CardTitle>
-            <h2>{t('auth:logIn')}</h2>
+            <h2>{t('logIn')}</h2>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <LoginForm />
         </CardContent>
         <CardFooter className="justify-center">
-          <p>{t('auth:forgotPassword')}</p>
+          <p>{t('forgotPassword')}</p>
         </CardFooter>
       </Card>
     </section>

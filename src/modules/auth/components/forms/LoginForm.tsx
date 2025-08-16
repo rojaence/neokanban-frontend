@@ -17,10 +17,10 @@ import type { AuthLogin } from '../../models/AuthLogin';
 import { ApiError } from '@/api/HttpError';
 
 export const LoginForm = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(['auth', 'common']);
   const mutation = useLogin();
   const form = useForm({
-    resolver: zodResolver(loginSchema(t)),
+    resolver: zodResolver(loginSchema()),
     defaultValues: {
       password: '',
       username: '',
@@ -55,7 +55,7 @@ export const LoginForm = () => {
               <FormControl>
                 <Input
                   type="text"
-                  placeholder={t('auth:labels:username')}
+                  placeholder={t('auth:placeholders.username')}
                   {...field}
                 />
               </FormControl>

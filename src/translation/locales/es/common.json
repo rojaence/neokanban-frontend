@@ -3,5 +3,8 @@
     "accept": "acceptar",
     "cancel": "cancelar",
     "submit": "enviar"
+  },
+  "validations": {
+    "required": "El campo es requerido"
   }
 }

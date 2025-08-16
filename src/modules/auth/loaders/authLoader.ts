@@ -18,7 +18,7 @@ export const authLoader = async () => {
   }
   try {
     const res = await userProfile();
-    setProfile(res.data!);
+    setProfile(res.data);
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError) {

@@ -1,8 +1,7 @@
 import HttpClient from '@/api/httpClient';
 import type { IHttpResponse } from '@/api/interfaces';
-import type { UserAccessProfile } from '../models/UserProfile';
-import type { AuthAccess } from '../models/AuthAccess';
-import type { AuthLogin } from '../models/AuthLogin';
+import type { UserProfile } from '../models/UserProfile';
+import type { AuthAccessDto, AuthLoginDto } from '../models/AuthLogin';
 
 export const helloWorld = async () => {
   const { data } = await HttpClient.get<IHttpResponse<string>>('/');
@@ -11,12 +10,12 @@ export const helloWorld = async () => {
 
 export const userProfile = async () => {
   const { data } =
-    await HttpClient.get<IHttpResponse<UserAccessProfile>>('/auth/profile');
+    await HttpClient.get<IHttpResponse<UserProfile>>('/auth/profile');
   return data;
 };
 
-export const login = async (credentials: AuthLogin) => {
-  const { data } = await HttpClient.post<IHttpResponse<AuthAccess>>(
+export const login = async (credentials: AuthLoginDto) => {
+  const { data } = await HttpClient.post<IHttpResponse<AuthAccessDto>>(
     '/auth/login',
     credentials,
   );

@@ -13,8 +13,9 @@ import {
 } from '@/shared/components/ui/Form';
 import { Input } from '@/shared/components/ui/Input';
 import { useLogin } from '../../services/authService';
-import type { AuthLogin } from '../../models/AuthLogin';
+import type { AuthLoginDto } from '../../models/AuthLogin';
 import { ApiError } from '@/api/HttpError';
+import { redirect } from 'react-router';
 
 export const LoginForm = () => {
   const { t } = useTranslation(['auth', 'common']);
@@ -27,10 +28,10 @@ export const LoginForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<AuthLogin> = async (data) => {
+  const onSubmit: SubmitHandler<AuthLoginDto> = async (data) => {
     await mutation.mutateAsync(data, {
       onSuccess: () => {
-        alert('Login correcto');
+        redirect('/dashbaord');
       },
       onError: (err) => {
         if (err instanceof ApiError) {

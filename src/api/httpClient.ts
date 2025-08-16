@@ -3,9 +3,10 @@ import LocalStorageHelper from '@/shared/helpers/localStorage';
 import axios, { AxiosError, HttpStatusCode, type AxiosResponse } from 'axios';
 import type { IHttpResponse } from './interfaces';
 import { ApiError } from './HttpError';
+import type { AuthAccessDto } from '@/modules/auth/models/AuthLogin';
 
 export const LocalStorageKeys = {
-  AccessToken: 'access-token',
+  authAccess: 'authAccess',
 } as const;
 
 const HttpClient = axios.create({
@@ -16,10 +17,10 @@ const HttpClient = axios.create({
 });
 
 HttpClient.interceptors.request.use((config) => {
-  const token = LocalStorageHelper.getStorageValue<string>(
-    LocalStorageKeys.AccessToken,
+  const auth = LocalStorageHelper.getItem<AuthAccessDto>(
+    LocalStorageKeys.authAccess,
   );
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (auth) config.headers.Authorization = `Bearer ${auth.accessToken}`;
   return config;
 });
 

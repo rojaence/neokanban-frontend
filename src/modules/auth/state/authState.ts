@@ -1,24 +1,17 @@
 import { create } from 'zustand';
+import type { UserProfile } from '../models/UserProfile';
 
 interface AuthStateI {
   isAuthenticated: boolean;
   userData: object | null;
-  setLogin: (token: string) => void;
-  setUserData: (data: UserDataI) => void;
-}
-
-interface UserDataI {
-  username: string;
+  setUserData: (data?: UserProfile) => void;
 }
 
 const useAuthState = create<AuthStateI>()((set) => ({
   isAuthenticated: false,
   userData: null,
-  setLogin: (token: string) => {
-    if (token) set({ isAuthenticated: true });
-  },
-  setUserData: (data: UserDataI) => {
-    set({ userData: data });
+  setUserData: (data?: UserProfile) => {
+    set({ userData: data, isAuthenticated: data !== null });
   },
 }));
 

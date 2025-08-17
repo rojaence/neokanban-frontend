@@ -4,7 +4,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/shared/components/ui/Card';
+} from '@/shared/components/ui/card';
 import { LoginForm } from '../components/forms/LoginForm';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';

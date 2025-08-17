@@ -1,17 +1,17 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { Form } from '@/shared/components/ui/Form';
+import { Form } from '@/shared/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '../../schemas/authSchema';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@/shared/components/ui/Button';
+import { Button } from '@/shared/components/ui/button';
 import {
   FormField,
   FormItem,
   FormLabel,
   FormControl,
   FormMessage,
-} from '@/shared/components/ui/Form';
-import { Input } from '@/shared/components/ui/Input';
+} from '@/shared/components/ui/form';
+import { Input } from '@/shared/components/ui/input';
 import { useLogin } from '../../services/authService';
 import type { AuthLoginDto } from '../../models/AuthLogin';
 import { ApiError } from '@/api/HttpError';

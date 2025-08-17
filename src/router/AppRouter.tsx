@@ -8,6 +8,7 @@ import { lazy, Suspense } from 'react';
 import { ErrorView } from '@/shared/views/ErrorView';
 import { authLoader } from '@/modules/auth/loaders/authLoader';
 import { LoadingView } from '@/shared/views/LoadingView';
+import { DashboardBasePath } from '@/modules/dashboard/constants/dashboardRoutePaths';
 
 const Dashboard = lazy(() => import('@/modules/dashboard/views/Dashboard'));
 const MainLayout = lazy(() => import('@/shared/layouts/MainLayout'));
@@ -18,7 +19,7 @@ const AppRouter = createBrowserRouter([
     element: <Navigate to={'dashboard'} replace />,
   },
   {
-    path: 'dashboard',
+    path: DashboardBasePath,
     element: (
       <Suspense fallback={<LoadingView />}>
         <AuthGuard>
@@ -27,6 +28,7 @@ const AppRouter = createBrowserRouter([
       </Suspense>
     ),
     loader: authLoader,
+    id: 'dashboard',
     errorElement: <ErrorView />,
     children: [
       {
@@ -37,7 +39,14 @@ const AppRouter = createBrowserRouter([
   },
   {
     path: AuthBasePath,
-    Component: AuthLayout,
+    element: (
+      <Suspense fallback={<LoadingView />}>
+        <AuthGuard>
+          <AuthLayout />
+        </AuthGuard>
+      </Suspense>
+    ),
+    loader: authLoader,
     children: AuthRoutes,
   },
   {

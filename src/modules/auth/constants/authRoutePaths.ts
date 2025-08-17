@@ -5,6 +5,6 @@ export const AuthRouteSegments = {
 } as const;
 
 export const AuthFullRoutePaths = {
-  base: AuthBasePath,
-  login: `auth/login`,
+  base: `/${AuthBasePath}`,
+  login: `/auth/login`,
 };

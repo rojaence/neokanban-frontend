@@ -1,9 +1,11 @@
 import {
   AuthBasePath,
+  AuthFullRoutePaths,
   AuthRouteSegments,
 } from '@/modules/auth/constants/authRoutePaths';
 import useAuthState from '@/modules/auth/state/authState';
-import { Navigate } from 'react-router';
+import { DashboardFullRoutePaths } from '@/modules/dashboard/constants/dashboardRoutePaths';
+import { Navigate, useLocation } from 'react-router';
 
 interface Props {
   children: React.ReactNode;
@@ -11,6 +13,14 @@ interface Props {
 
 export const AuthGuard = ({ children }: Props) => {
   const authState = useAuthState();
+  const location = useLocation();
+
+  if (
+    authState.isAuthenticated &&
+    location.pathname === AuthFullRoutePaths.login
+  ) {
+    return <Navigate to={DashboardFullRoutePaths.base} replace />;
+  }
 
   if (!authState.isAuthenticated) {
     return (

@@ -12,10 +12,10 @@ export const Login = () => {
   const { t } = useTranslation('auth');
   return (
     <section>
-      <Card>
+      <Card className="w-full max-w-xl md:w-xl mx-auto bg-slate-100 border-none">
         <CardHeader>
-          <CardTitle>
-            <h2>{t('logIn')}</h2>
+          <CardTitle className="text-center">
+            <h2 className="text-3xl">{t('logIn')}</h2>
           </CardTitle>
         </CardHeader>
         <CardContent>

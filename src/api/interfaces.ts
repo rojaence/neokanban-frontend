@@ -6,3 +6,10 @@ export interface IHttpResponse<T> {
   data?: T;
   error?: T;
 }
+
+export interface IHttpErrorResponse<T> {
+  statusCode: HttpStatusCode;
+  message: string;
+  data?: T;
+  error?: string;
+}

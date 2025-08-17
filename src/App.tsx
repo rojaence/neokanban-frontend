@@ -4,13 +4,19 @@ import { RouterProvider } from 'react-router';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from '@/shared/lib/queryClient';
+import { Toaster } from './shared/components/ui/Sonner';
+import { Suspense } from 'react';
+import { LoadingView } from './shared/views/LoadingView';
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={AppRouter} />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <Suspense fallback={<LoadingView />}>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={AppRouter} />
+        <ReactQueryDevtools initialIsOpen={false} />
+        <Toaster />
+      </QueryClientProvider>
+    </Suspense>
   );
 };
 

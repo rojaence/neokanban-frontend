@@ -7,6 +7,7 @@ import { AuthLayout } from '@/shared/layouts/AuthLayout';
 import { lazy, Suspense } from 'react';
 import { ErrorView } from '@/shared/views/ErrorView';
 import { authLoader } from '@/modules/auth/loaders/authLoader';
+import { LoadingView } from '@/shared/views/LoadingView';
 
 const Dashboard = lazy(() => import('@/modules/dashboard/views/Dashboard'));
 const MainLayout = lazy(() => import('@/shared/layouts/MainLayout'));
@@ -19,7 +20,7 @@ const AppRouter = createBrowserRouter([
   {
     path: 'dashboard',
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingView />}>
         <AuthGuard>
           <MainLayout />
         </AuthGuard>

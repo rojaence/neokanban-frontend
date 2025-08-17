@@ -15,9 +15,13 @@ import { Input } from '@/shared/components/ui/Input';
 import { useLogin } from '../../services/authService';
 import type { AuthLoginDto } from '../../models/AuthLogin';
 import { ApiError } from '@/api/HttpError';
-import { redirect } from 'react-router';
+import { toast } from 'sonner';
 
-export const LoginForm = () => {
+interface Props {
+  onSuccess: () => void;
+}
+
+export const LoginForm = ({ onSuccess }: Props) => {
   const { t } = useTranslation(['auth', 'common']);
   const mutation = useLogin();
   const form = useForm({
@@ -31,11 +35,11 @@ export const LoginForm = () => {
   const onSubmit: SubmitHandler<AuthLoginDto> = async (data) => {
     await mutation.mutateAsync(data, {
       onSuccess: () => {
-        redirect('/dashbaord');
+        onSuccess();
       },
       onError: (err) => {
         if (err instanceof ApiError) {
-          alert(err.response.error);
+          toast.error(err.response.error);
         }
       },
     });

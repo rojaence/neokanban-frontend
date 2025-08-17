@@ -1,8 +1,8 @@
-import type { IHttpResponse } from './interfaces';
+import type { IHttpErrorResponse } from './interfaces';
 
 export class ApiError<T> extends Error {
-  public response: IHttpResponse<T>;
-  constructor(response: IHttpResponse<T>) {
+  public response: IHttpErrorResponse<T>;
+  constructor(response: IHttpErrorResponse<T>) {
     super(response.message);
     this.response = response;
     Object.setPrototypeOf(this, ApiError.prototype);

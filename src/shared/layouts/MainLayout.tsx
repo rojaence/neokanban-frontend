@@ -1,14 +1,17 @@
 import { Outlet } from 'react-router';
+import { SidebarProvider, SidebarTrigger } from '../components/ui/sidebar';
+import { AppSidebar } from './AppSidebar';
+import { Menu as MenuIcon } from 'lucide-react';
 
 const MainLayout = () => {
   return (
-    <>
-      <header>Header</header>
-      <main>
+    <SidebarProvider>
+      <AppSidebar />
+      <main className="p-2">
+        <SidebarTrigger icon={<MenuIcon />} />
         <Outlet />
       </main>
-      <footer>Footer</footer>
-    </>
+    </SidebarProvider>
   );
 };
 

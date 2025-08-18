@@ -6,5 +6,8 @@
   },
   "validations": {
     "required": "The field is required"
+  },
+  "routes": {
+    "home": "dashboard"
   }
 }

@@ -3,7 +3,7 @@ import type { UserProfile } from '../models/UserProfile';
 
 interface AuthStateI {
   isAuthenticated: boolean;
-  userData: object | null;
+  userData: UserProfile | null;
   setUserData: (data?: UserProfile) => void;
 }
 

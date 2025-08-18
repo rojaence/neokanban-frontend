@@ -1,7 +1,7 @@
 import environment from '@/environment/env';
 import LocalStorageHelper from '@/shared/helpers/localStorage';
 import axios, { AxiosError, HttpStatusCode, type AxiosResponse } from 'axios';
-import type { IHttpResponse } from './interfaces';
+import type { IHttpErrorResponse, IHttpResponse } from './interfaces';
 import { ApiError } from './HttpError';
 import type { AuthAccessDto } from '@/modules/auth/models/AuthLogin';
 
@@ -28,12 +28,12 @@ HttpClient.interceptors.response.use(
   <T>(response: AxiosResponse<IHttpResponse<T>>) => {
     return response;
   },
-  (error: AxiosError<IHttpResponse<unknown>>) => {
+  (error: AxiosError<IHttpResponse<string>>) => {
     if (error instanceof AxiosError) {
-      let standardError: IHttpResponse<unknown> = {
+      let standardError: IHttpErrorResponse<string> = {
         statusCode: HttpStatusCode.BadRequest,
         message: 'Unknown error',
-        data: null,
+        data: undefined,
         error: null,
       };
       if (error.request) {
@@ -44,7 +44,7 @@ HttpClient.interceptors.response.use(
         standardError = {
           statusCode: error.response.status,
           message: error.response.data?.message || 'Error',
-          data: null,
+          data: undefined,
           error: error.response.data?.error ?? null,
         };
       }

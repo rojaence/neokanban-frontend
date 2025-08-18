@@ -11,5 +11,5 @@ export interface IHttpErrorResponse<T> {
   statusCode: HttpStatusCode;
   message: string;
   data?: T;
-  error?: string;
+  error: string | null;
 }

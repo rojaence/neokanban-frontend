@@ -46,6 +46,7 @@ const AppRouter = createBrowserRouter([
         </AuthGuard>
       </Suspense>
     ),
+    errorElement: <ErrorView />,
     loader: authLoader,
     children: AuthRoutes,
   },

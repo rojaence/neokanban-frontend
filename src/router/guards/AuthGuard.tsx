@@ -22,9 +22,16 @@ export const AuthGuard = ({ children }: Props) => {
     return <Navigate to={DashboardFullRoutePaths.base} replace />;
   }
 
-  if (!authState.isAuthenticated) {
+  if (
+    !authState.isAuthenticated &&
+    location.pathname !== AuthFullRoutePaths.login
+  ) {
     return (
-      <Navigate to={`/${AuthBasePath}/${AuthRouteSegments.Login}`} replace />
+      <Navigate
+        to={`/${AuthBasePath}/${AuthRouteSegments.Login}`}
+        state={{ from: location }}
+        replace
+      />
     );
   }
 

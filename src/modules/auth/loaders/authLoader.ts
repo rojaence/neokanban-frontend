@@ -1,11 +1,10 @@
 import { userProfile } from '@/modules/auth/repositories/authRepository';
-import { AxiosError, HttpStatusCode } from 'axios';
-import { redirect } from 'react-router';
-import { AuthFullRoutePaths } from '../constants/authRoutePaths';
+import { HttpStatusCode } from 'axios';
 import { queryClient } from '@/shared/lib/queryClient';
 import { AUTH_QUERY_KEYS } from '../constants/authQueryKeys';
 import useAuthState from '../state/authState';
 import type { UserProfile } from '../models/UserProfile';
+import { ApiError } from '@/api/HttpError';
 
 export const authLoader = async () => {
   const cachedUser = queryClient.getQueryData(
@@ -21,10 +20,11 @@ export const authLoader = async () => {
     setProfile(res.data);
     return res.data;
   } catch (error) {
-    if (error instanceof AxiosError) {
-      if (error.response?.status === HttpStatusCode.Unauthorized) {
-        redirect(AuthFullRoutePaths.login);
+    if (error instanceof ApiError) {
+      if (error.response.statusCode === HttpStatusCode.Unauthorized) {
+        return null;
       }
     }
+    throw error;
   }
 };

@@ -8,7 +8,7 @@ import {
   SidebarGroup,
   SidebarMenuButton,
 } from '../components/ui/sidebar';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 export const AppMenu = () => {
@@ -38,10 +38,13 @@ export const AppMenu = () => {
               {item.children.map((subItem) => (
                 <SidebarMenuItem key={subItem.id}>
                   <SidebarMenuButton asChild>
-                    <Link to={subItem.url}>
+                    <NavLink
+                      to={subItem.url}
+                      className="[&[data-active]]:bg-sidebar-accent [&[data-active]]:text-sidebar-accent-foreground"
+                    >
                       <subItem.icon />
                       <span>{subItem.title}</span>
-                    </Link>
+                    </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

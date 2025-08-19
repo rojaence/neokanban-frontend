@@ -10,7 +10,7 @@ export const AppSidebar = () => {
   const userData = useAuthState((state) => state.userData);
 
   return (
-    <Sidebar>
+    <Sidebar variant="floating">
       <SidebarContent>
         <AppMenu />
       </SidebarContent>

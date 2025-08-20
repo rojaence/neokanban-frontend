@@ -5,9 +5,13 @@
     "submit": "enviar"
   },
   "validations": {
-    "required": "El campo es requerido"
+    "required": "el campo es requerido"
   },
   "routes": {
-    "home": "dashboard"
+    "home": "dashboard",
+    "tasks": "tareas"
+  },
+  "labels": {
+    "noResults": "no hay resultados"
   }
 }

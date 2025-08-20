@@ -1,4 +1,4 @@
-import { Home } from 'lucide-react';
+import { Home, List } from 'lucide-react';
 import { DashboardFullRoutePaths } from '@/modules/dashboard/constants/dashboardRoutePaths';
 import {
   SidebarMenuItem,
@@ -10,6 +10,7 @@ import {
 } from '../components/ui/sidebar';
 import { NavLink } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import { TaskFullRoutePaths } from '@/modules/tasks/constants/TasksRoutePaths';
 
 export const AppMenu = () => {
   const { t } = useTranslation(['common']);
@@ -23,6 +24,12 @@ export const AppMenu = () => {
           title: t('routes.home'),
           url: DashboardFullRoutePaths.base,
           icon: Home,
+        },
+        {
+          id: 'tasks',
+          title: t('routes.tasks'),
+          url: TaskFullRoutePaths.base,
+          icon: List,
         },
       ],
     },

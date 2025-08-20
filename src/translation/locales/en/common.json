@@ -5,9 +5,13 @@
     "submit": "submit"
   },
   "validations": {
-    "required": "The field is required"
+    "required": "the field is required"
   },
   "routes": {
-    "home": "dashboard"
+    "home": "dashboard",
+    "tasks": "tasks"
+  },
+  "labels": {
+    "noResults": "no results"
   }
 }

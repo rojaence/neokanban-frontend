@@ -9,6 +9,8 @@ import { ErrorView } from '@/shared/views/ErrorView';
 import { authLoader } from '@/modules/auth/loaders/authLoader';
 import { LoadingView } from '@/shared/views/LoadingView';
 import { DashboardBasePath } from '@/modules/dashboard/constants/dashboardRoutePaths';
+import { TasksBasePath } from '@/modules/tasks/constants/TasksRoutePaths';
+import { TaskRoutes } from '@/modules/tasks/Routes';
 
 const Dashboard = lazy(() => import('@/modules/dashboard/views/Dashboard'));
 const MainLayout = lazy(() => import('@/shared/layouts/MainLayout'));
@@ -36,6 +38,19 @@ const AppRouter = createBrowserRouter([
         element: <Dashboard />,
       },
     ],
+  },
+  {
+    path: TasksBasePath,
+    element: (
+      <Suspense fallback={<LoadingView />}>
+        <AuthGuard>
+          <MainLayout />
+        </AuthGuard>
+      </Suspense>
+    ),
+    errorElement: <ErrorView />,
+    loader: authLoader,
+    children: TaskRoutes,
   },
   {
     path: AuthBasePath,

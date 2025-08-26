@@ -1,7 +1,12 @@
 import environment from '@/environment/env';
 import LocalStorageHelper from '@/shared/helpers/localStorage';
 import axios, { AxiosError, HttpStatusCode, type AxiosResponse } from 'axios';
-import type { IHttpErrorResponse, IHttpResponse } from './interfaces';
+import {
+  REFRESH_AUTH_ERROR,
+  REFRESH_AUTH_URI,
+  type IHttpErrorResponse,
+  type IHttpResponse,
+} from './interfaces';
 import { ApiError } from './HttpError';
 import type { AuthAccessDto } from '@/modules/auth/models/AuthLogin';
 
@@ -20,7 +25,8 @@ HttpClient.interceptors.request.use((config) => {
   const auth = LocalStorageHelper.getItem<AuthAccessDto>(
     LocalStorageKeys.authAccess,
   );
-  if (auth) config.headers.Authorization = `Bearer ${auth.accessToken}`;
+  if (auth && config.url !== REFRESH_AUTH_URI)
+    config.headers.Authorization = `Bearer ${auth.accessToken}`;
   return config;
 });
 
@@ -28,7 +34,7 @@ HttpClient.interceptors.response.use(
   <T>(response: AxiosResponse<IHttpResponse<T>>) => {
     return response;
   },
-  (error: AxiosError<IHttpResponse<string>>) => {
+  async (error: AxiosError<IHttpResponse<string>>) => {
     if (error instanceof AxiosError) {
       let standardError: IHttpErrorResponse<string> = {
         statusCode: HttpStatusCode.BadRequest,
@@ -41,12 +47,60 @@ HttpClient.interceptors.response.use(
       }
       if (error.response) {
         // ERROR EN LA RESPUESTA
-        standardError = {
-          statusCode: error.response.status,
-          message: error.response.data?.message || 'Error',
-          data: undefined,
-          error: error.response.data?.error ?? null,
-        };
+        // INTENTAR REFRESH TOKEN
+        const originalRequest = error.config;
+        const dataError = error.response.data.error;
+        const dataMessage = error.response.data.message;
+        if (
+          error.response.status === HttpStatusCode.Unauthorized.valueOf() &&
+          (dataError === REFRESH_AUTH_ERROR ||
+            dataMessage === REFRESH_AUTH_ERROR)
+        ) {
+          try {
+            const auth = LocalStorageHelper.getItem<AuthAccessDto>(
+              LocalStorageKeys.authAccess,
+            );
+            const refreshResponse = await HttpClient.post<
+              IHttpResponse<AuthAccessDto>
+            >(
+              REFRESH_AUTH_URI,
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${auth!.refreshToken}`,
+                },
+              },
+            );
+            if (refreshResponse.status === HttpStatusCode.Ok.valueOf()) {
+              LocalStorageHelper.setItem<AuthAccessDto>(
+                LocalStorageKeys.authAccess,
+                refreshResponse.data.data!,
+              );
+            }
+            HttpClient.defaults.headers.common.Authorization = `Bearer ${refreshResponse.data.data?.accessToken}`;
+
+            return HttpClient(originalRequest!);
+          } catch (refreshError) {
+            if (refreshError instanceof AxiosError) {
+              standardError = {
+                statusCode: error.response.status,
+                message: error.response.data?.message || 'Error',
+                data: undefined,
+                error: error.response.data?.error ?? null,
+              };
+            }
+          }
+        } else {
+          standardError = {
+            statusCode: error.response.status,
+            message: error.response.data?.message || 'Error',
+            data: undefined,
+            error: error.response.data?.error ?? null,
+          };
+        }
+      }
+      if (error.code === AxiosError.ERR_NETWORK.valueOf()) {
+        standardError.statusCode = AxiosError.ERR_NETWORK;
       }
       return Promise.reject(new ApiError(standardError));
     }

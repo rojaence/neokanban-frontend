@@ -4,4 +4,5 @@ export interface AuthLoginDto {
 }
 export interface AuthAccessDto {
   accessToken: string;
+  refreshToken: string;
 }

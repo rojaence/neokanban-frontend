@@ -1,5 +1,5 @@
 import { userProfile } from '@/modules/auth/repositories/authRepository';
-import { HttpStatusCode } from 'axios';
+import { AxiosError, HttpStatusCode } from 'axios';
 import { queryClient } from '@/shared/lib/queryClient';
 import { AUTH_QUERY_KEYS } from '../constants/authQueryKeys';
 import useAuthState from '../state/authState';
@@ -24,7 +24,10 @@ export const authLoader = async () => {
       if (error.response.statusCode === HttpStatusCode.Unauthorized) {
         return null;
       }
+      if (error.response.statusCode === AxiosError.ERR_NETWORK.valueOf()) {
+        throw error;
+      }
     }
-    throw error;
+    return null;
   }
 };

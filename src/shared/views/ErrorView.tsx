@@ -1,3 +1,7 @@
 export const ErrorView = () => {
-  return <article>Sorry, unknown error</article>;
+  return (
+    <article className="grid place-items-center min-h-screen w-full">
+      Sorry, unknown error
+    </article>
+  );
 };

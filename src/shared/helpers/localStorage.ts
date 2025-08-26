@@ -8,6 +8,10 @@ const LocalStorageHelper = {
   setItem: <T>(key: string, payload: T) => {
     localStorage.setItem(key, JSON.stringify(payload));
   },
+
+  deleteItem: (key: string) => {
+    localStorage.removeItem(key);
+  },
 };
 
 export default LocalStorageHelper;

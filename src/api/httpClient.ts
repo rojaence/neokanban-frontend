@@ -4,8 +4,8 @@ import axios, { AxiosError, HttpStatusCode, type AxiosResponse } from 'axios';
 import {
   REFRESH_AUTH_ERROR,
   REFRESH_AUTH_URI,
-  type IHttpErrorResponse,
-  type IHttpResponse,
+  type HttpErrorResponse,
+  type HttpResponse,
 } from './interfaces';
 import { ApiError } from './HttpError';
 import type { AuthAccessDto } from '@/modules/auth/models/AuthLogin';
@@ -31,12 +31,12 @@ HttpClient.interceptors.request.use((config) => {
 });
 
 HttpClient.interceptors.response.use(
-  <T>(response: AxiosResponse<IHttpResponse<T>>) => {
+  <T>(response: AxiosResponse<HttpResponse<T>>) => {
     return response;
   },
-  async (error: AxiosError<IHttpResponse<string>>) => {
+  async (error: AxiosError<HttpResponse<string>>) => {
     if (error instanceof AxiosError) {
-      let standardError: IHttpErrorResponse<string> = {
+      let standardError: HttpErrorResponse<string> = {
         statusCode: HttpStatusCode.BadRequest,
         message: 'Unknown error',
         data: undefined,
@@ -61,7 +61,7 @@ HttpClient.interceptors.response.use(
               LocalStorageKeys.authAccess,
             );
             const refreshResponse = await HttpClient.post<
-              IHttpResponse<AuthAccessDto>
+              HttpResponse<AuthAccessDto>
             >(
               REFRESH_AUTH_URI,
               {},

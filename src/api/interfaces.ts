@@ -1,13 +1,13 @@
 import type { HttpStatusCode } from 'axios';
 
-export interface IHttpResponse<T> {
+export interface HttpResponse<T> {
   statusCode: HttpStatusCode;
   message: string;
   data?: T;
   error?: T;
 }
 
-export interface IHttpErrorResponse<T> {
+export interface HttpErrorResponse<T> {
   statusCode: HttpStatusCode | string;
   message: string;
   data?: T;

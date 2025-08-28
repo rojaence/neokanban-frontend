@@ -8,6 +8,7 @@
     "required": "The field is required"
   },
   "routes": {
-    "home": "dashboard"
+    "home": "dashboard",
+    "account": "account"
   }
 }

@@ -8,6 +8,7 @@
     "required": "El campo es requerido"
   },
   "routes": {
-    "home": "dashboard"
+    "home": "inicio",
+    "account": "cuenta"
   }
 }

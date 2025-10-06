@@ -10,5 +10,9 @@
   "routes": {
     "home": "inicio",
     "account": "cuenta"
+  },
+  "dialog": {
+    "confirm": "Aceptar",
+    "cancel": "Cancelar"
   }
 }

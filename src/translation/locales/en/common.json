@@ -10,5 +10,9 @@
   "routes": {
     "home": "dashboard",
     "account": "account"
+  },
+  "dialog": {
+    "confirm": "Accept",
+    "cancel": "Cancel"
   }
 }

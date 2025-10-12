@@ -46,6 +46,10 @@ export const ConfirmDialog = ({
     proceed(true);
   };
 
+  const handleOnCancel = () => {
+    proceed(false);
+  };
+
   const iconColors: Record<DialogVariantColor, string> = {
     default: 'stroke-primary',
     success: 'stroke-success',
@@ -73,7 +77,7 @@ export const ConfirmDialog = ({
         <DialogFooter>
           {showCancelButton && (
             <Button
-              onClick={handleOnConfirm}
+              onClick={handleOnCancel}
               variant="ghost"
               className="capitalize"
             >

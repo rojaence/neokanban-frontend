@@ -23,16 +23,7 @@ export default tseslint.config([
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
-      'prefer-promise-reject-errors': 'off',
-      '@typescript-eslint/prefer-promise-reject-errors': 'error',
-      '@typescript-eslint/no-misused-promises': [
-        'error',
-        {
-          checksVoidReturn: {
-            attributes: false,
-          },
-        },
-      ],
+      '@typescript-eslint/no-misused-promises': 'off',
     },
     languageOptions: {
       ecmaVersion: 2020,

@@ -7,13 +7,22 @@ import {
 } from '@/shared/components/ui/card';
 import { LoginForm } from '../components/forms/LoginForm';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { AuthFullRoutePaths } from '../constants/authRoutePaths';
+import { useForgotPasswordState } from '../state/forgotPasswordState';
+import { useEffect } from 'react';
 
 export const Login = () => {
   const { t } = useTranslation('auth');
   const navigate = useNavigate();
-
+  const { setStep } = useForgotPasswordState();
   const navigateToDashboard = () => navigate('/dashboard');
+
+  useEffect(() => {
+    return () => {
+      setStep('SEND_EMAIL');
+    };
+  }, [setStep]);
 
   return (
     <section>
@@ -27,7 +36,9 @@ export const Login = () => {
           <LoginForm onSuccess={navigateToDashboard} />
         </CardContent>
         <CardFooter className="justify-center">
-          <p>{t('forgotPassword')}</p>
+          <Link to={AuthFullRoutePaths.forgotPassword}>
+            {t('forgotPassword')}
+          </Link>
         </CardFooter>
       </Card>
     </section>

@@ -33,7 +33,7 @@ export const ConfirmDialog = ({
   title,
   cancelButton,
   confirmButton,
-  showCancelButton = true,
+  showCancelButton = false,
 }: ConfirmDialogProps<CustomDialogProps, boolean>) => {
   const { t } = useTranslation(['common']);
   const defaultConfirmButton: ActionButtonProps = {

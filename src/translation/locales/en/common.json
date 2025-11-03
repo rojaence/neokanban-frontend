@@ -5,11 +5,15 @@
     "submit": "submit"
   },
   "validations": {
-    "required": "The field is required"
+    "required": "The field is required",
+    "invalidEmail": "Enter a valid email"
   },
   "routes": {
     "home": "dashboard",
     "account": "account"
+  },
+  "copy": {
+    "errorViewMessage": "We're sorry, an unexpected error has ocurred"
   },
   "dialog": {
     "confirm": "Accept",

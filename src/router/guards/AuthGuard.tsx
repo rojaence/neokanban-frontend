@@ -14,6 +14,10 @@ interface Props {
 export const AuthGuard = ({ children }: Props) => {
   const authState = useAuthState();
   const location = useLocation();
+  const freeRoutes = [
+    AuthFullRoutePaths.login,
+    AuthFullRoutePaths.forgotPassword,
+  ];
 
   if (
     authState.isAuthenticated &&
@@ -22,10 +26,7 @@ export const AuthGuard = ({ children }: Props) => {
     return <Navigate to={DashboardFullRoutePaths.base} replace />;
   }
 
-  if (
-    !authState.isAuthenticated &&
-    location.pathname !== AuthFullRoutePaths.login
-  ) {
+  if (!authState.isAuthenticated && !freeRoutes.includes(location.pathname)) {
     return (
       <Navigate
         to={`/${AuthBasePath}/${AuthRouteSegments.Login}`}

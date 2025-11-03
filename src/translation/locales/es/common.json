@@ -5,11 +5,15 @@
     "submit": "enviar"
   },
   "validations": {
-    "required": "El campo es requerido"
+    "required": "El campo es requerido",
+    "invalidEmail": "Ingrese un email válido"
   },
   "routes": {
     "home": "inicio",
     "account": "cuenta"
+  },
+  "copy": {
+    "errorViewMessage": "Lo sentimos, ha ocurrido un error inesperado"
   },
   "dialog": {
     "confirm": "Aceptar",

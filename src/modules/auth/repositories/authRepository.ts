@@ -2,6 +2,9 @@ import HttpClient from '@/api/httpClient';
 import type { HttpResponse as HttpResponse } from '@/api/interfaces';
 import type { UserProfile } from '../models/UserProfile';
 import type { AuthAccessDto, AuthLoginDto } from '../models/AuthLogin';
+import type { ResetPasswordReq } from '@/shared/models/auth';
+
+export const BASE_AUTH_PATH = '/auth';
 
 export const helloWorld = async () => {
   const { data } = await HttpClient.get<HttpResponse<string>>('/');
@@ -24,5 +27,13 @@ export const login = async (credentials: AuthLoginDto) => {
 
 export const logout = async () => {
   const { data } = await HttpClient.post<HttpResponse<null>>('/auth/logout');
+  return data;
+};
+
+export const resetPassword = async (payload: ResetPasswordReq) => {
+  const { data } = await HttpClient.post<HttpResponse<string>>(
+    `${BASE_AUTH_PATH}/reset-password`,
+    payload,
+  );
   return data;
 };

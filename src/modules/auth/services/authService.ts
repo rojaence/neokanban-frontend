@@ -3,6 +3,7 @@ import {
   helloWorld,
   login,
   logout,
+  resetPassword,
   userProfile,
 } from '../repositories/authRepository';
 import { AUTH_QUERY_KEYS } from '../constants/authQueryKeys';
@@ -58,5 +59,11 @@ export const useLogout = () => {
       });
       setUserData(undefined);
     },
+  });
+};
+
+export const useResetPassword = () => {
+  return useMutation({
+    mutationFn: resetPassword,
   });
 };

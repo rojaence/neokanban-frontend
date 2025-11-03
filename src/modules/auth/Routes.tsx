@@ -1,6 +1,7 @@
 import { Login } from '@/modules/auth/views/Login';
 import { Navigate, type RouteObject } from 'react-router';
 import { AuthRouteSegments } from './constants/authRoutePaths';
+import { ForgotPassword } from './views/ForgotPassword';
 
 export const AuthRoutes: RouteObject[] = [
   {
@@ -10,5 +11,9 @@ export const AuthRoutes: RouteObject[] = [
   {
     path: AuthRouteSegments.Login,
     Component: Login,
+  },
+  {
+    path: AuthRouteSegments.ForgotPassword,
+    Component: ForgotPassword,
   },
 ];

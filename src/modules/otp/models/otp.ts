@@ -1,4 +1,4 @@
-export const OtpProcessEnum = {
+export const OtpProcessTypeEnum = {
   CHANGE_PASSWORD: 'change_password',
 } as const;
 
@@ -15,7 +15,7 @@ export interface ValidOtpRes {
 }
 
 export interface OtpCodeReq {
-  processType: keyof typeof OtpProcessEnum;
+  processType: keyof typeof OtpProcessTypeEnum;
 }
 
 export interface OtpEmailCodeReq extends OtpCodeReq {
@@ -31,4 +31,4 @@ export interface VerifyOtpEmailReq extends OtpCodeReq {
   code: string;
 }
 
-export const otpProcessTypeValues = Object.values(OtpProcessEnum);
+export const otpProcessTypeValues = Object.values(OtpProcessTypeEnum);

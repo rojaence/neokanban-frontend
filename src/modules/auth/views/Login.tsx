@@ -9,13 +9,13 @@ import { LoginForm } from '../components/forms/LoginForm';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router';
 import { AuthFullRoutePaths } from '../constants/authRoutePaths';
-import { useForgotPasswordState } from '../state/forgotPasswordState';
+import { useOtpProcessState } from '../state/otpProcessState';
 import { useEffect } from 'react';
 
 export const Login = () => {
   const { t } = useTranslation('auth');
   const navigate = useNavigate();
-  const { setStep } = useForgotPasswordState();
+  const { setStep } = useOtpProcessState();
   const navigateToDashboard = () => navigate('/dashboard');
 
   useEffect(() => {

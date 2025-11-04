@@ -2,7 +2,9 @@
   "actions": {
     "accept": "acceptar",
     "cancel": "cancelar",
-    "submit": "enviar"
+    "submit": "enviar",
+    "resendCode": "reenviar código",
+    "verify": "verificar"
   },
   "validations": {
     "required": "El campo es requerido",

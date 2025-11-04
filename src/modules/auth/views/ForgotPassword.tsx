@@ -1,10 +1,10 @@
 import { ChangePasswordForm } from '../components/forms/ChangePasswordForm';
 import { EmailForm } from '../components/forms/EmailForm';
 import { PasswordCodeForm } from '../components/forms/PasswordCodeForm';
-import { useForgotPasswordState } from '../state/forgotPasswordState';
+import { useOtpProcessState } from '../state/otpProcessState';
 
 export const ForgotPassword = () => {
-  const { step } = useForgotPasswordState();
+  const { step } = useOtpProcessState();
 
   if (step === 'SEND_EMAIL') {
     return <EmailForm />;
@@ -14,7 +14,7 @@ export const ForgotPassword = () => {
     return <PasswordCodeForm />;
   }
 
-  if (step === 'CHANGE_PASSWORD') {
+  if (step === 'VERIFIED_CODE') {
     return <ChangePasswordForm />;
   }
 };

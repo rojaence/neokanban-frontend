@@ -27,14 +27,14 @@ import {
 } from '../../schemas/authSchema';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import type { ResetPasswordReq } from '@/shared/models/auth';
-import { useForgotPasswordState } from '../../state/forgotPasswordState';
+import { useOtpProcessState } from '../../state/otpProcessState';
 import { toast } from 'sonner';
 import { ApiError } from '@/api/HttpError';
 import { confirmService } from '@/shared/services/confirm/confirmService';
 
 export const ChangePasswordForm = () => {
   const { t } = useTranslation('auth');
-  const { email: userEmail, otpToken } = useForgotPasswordState();
+  const { email: userEmail, otpToken } = useOtpProcessState();
   const mutation = useResetPassword();
   const navigate = useNavigate();
   const form = useForm({

@@ -26,12 +26,18 @@ import { useVerifyCodeByEmail } from '@/modules/otp/services/otpService';
 import type { VerifyOtpEmailReq, VerifyOtpReq } from '@/modules/otp/models/otp';
 import { ApiError } from '@/api/HttpError';
 import { toast } from 'sonner';
-import { useForgotPasswordState } from '../../state/forgotPasswordState';
+import { useOtpProcessState } from '../../state/otpProcessState';
+import { ResendOtpCode } from '../ResendOtpCode';
 
 export const PasswordCodeForm = () => {
-  const { t } = useTranslation('auth');
+  const { t } = useTranslation(['auth', 'common']);
   const mutation = useVerifyCodeByEmail();
-  const { setStep, setOtpToken, email: userEmail } = useForgotPasswordState();
+  const {
+    setStep,
+    setOtpToken,
+    email: userEmail,
+    setIsPending,
+  } = useOtpProcessState();
   const form = useForm({
     resolver: zodResolver(RecoveryCodeSchema),
     defaultValues: {
@@ -45,15 +51,19 @@ export const PasswordCodeForm = () => {
       processType: 'CHANGE_PASSWORD',
       code: data.code,
     };
+    setIsPending(true);
     await mutation.mutateAsync(payload, {
       onSuccess: (res) => {
         setOtpToken(res.data!.otpToken);
-        setStep('CHANGE_PASSWORD');
+        setStep('VERIFIED_CODE');
       },
       onError: (err) => {
         if (err instanceof ApiError) {
           toast.error(err.response.message);
         }
+      },
+      onSettled: () => {
+        setIsPending(false);
       },
     });
   };
@@ -84,8 +94,11 @@ export const PasswordCodeForm = () => {
                 </FormItem>
               )}
             />
-            <div className="flex justify-center">
-              <Button type="submit">{t('send')}</Button>
+            <div className="flex justify-center flex-col items-center gap-2">
+              <Button loading={mutation.isPending} type="submit">
+                {t('common:actions.verify')}
+              </Button>
+              <ResendOtpCode />
             </div>
           </form>
         </Form>
